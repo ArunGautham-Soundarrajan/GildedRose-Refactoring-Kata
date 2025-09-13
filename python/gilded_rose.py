@@ -30,7 +30,7 @@ class GildedRose(object):
         """Updates the quality of all items"""
         for item in self.items:
             handler = self.get_handler(item)
-            handler.update_quality()
+            handler.handle_update()
 
 
 class Item:
