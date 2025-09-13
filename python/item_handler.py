@@ -46,3 +46,11 @@ class BackstagePassesItemHandler(ItemHandler):
             self.item.quality = 0
         else:
             self.item.quality = min(50, self.item.quality + self.cal_degradation_rate())
+
+
+class SulfurasItemHandler(ItemHandler):
+    def update_quality(self):
+        pass
+
+    def update_sell_in(self):
+        pass
