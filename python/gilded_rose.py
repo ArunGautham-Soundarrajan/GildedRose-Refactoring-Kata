@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from item_handler import NormalItemHandler, AgedBrieItemHandler
+from item_handler import (
+    NormalItemHandler,
+    AgedBrieItemHandler,
+    BackstagePassesItemHandler,
+)
 
 
 class GildedRose(object):
@@ -10,16 +14,17 @@ class GildedRose(object):
     def update_quality(self):
         for item in self.items:
 
-            if (
-                item.name != "Backstage passes to a TAFKAL80ETC concert"
-                and item.name != "Sulfuras, Hand of Ragnaros"
-            ):
+            if item.name != "Sulfuras, Hand of Ragnaros":
                 if item.name == "Aged Brie":
-                    AgedBrieItemHandler(item).update_quality()
+                    AgedBrieItemHandler(item).handle_update()
+                    print("Aged Brie using class")
+                elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+                    BackstagePassesItemHandler(item).handle_update()
+                    print("Backstage using class")
                 else:
-                    NormalItemHandler(item).update_quality()
+                    NormalItemHandler(item).handle_update()
+                    print("Normal using class")
 
-                print("handling using class")
             else:
                 if (
                     item.name != "Aged Brie"

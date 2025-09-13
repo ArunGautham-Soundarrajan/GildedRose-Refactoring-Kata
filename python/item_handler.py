@@ -27,3 +27,22 @@ class NormalItemHandler(ItemHandler):
 class AgedBrieItemHandler(ItemHandler):
     def update_quality(self):
         self.item.quality = min(50, self.item.quality + self.cal_degradation_rate())
+
+
+class BackstagePassesItemHandler(ItemHandler):
+
+    def cal_degradation_rate(self):
+        if self.item.sell_in <= 0:
+            return 0
+        elif self.item.sell_in <= 5:
+            return 3
+        elif self.item.sell_in <= 10:
+            return 2
+        else:
+            return 1
+
+    def update_quality(self):
+        if self.item.sell_in <= 0:
+            self.item.quality = 0
+        else:
+            self.item.quality = min(50, self.item.quality + self.cal_degradation_rate())
