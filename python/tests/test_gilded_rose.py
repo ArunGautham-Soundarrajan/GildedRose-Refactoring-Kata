@@ -12,10 +12,11 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual("foo", items[0].name)
 
     def test_quality_never_negative(self):
-        items = [Item("foo", 0, 0)]
+        items = [Item("foo", 0, 0), Item("foo", 2, 1)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
+        self.assertEqual(0, items[1].quality)
 
     def test_quality_never_over_50(self):
         items = [Item("Aged Brie", 0, 50)]
@@ -70,6 +71,16 @@ class GildedRoseBackstagePassesTest(unittest.TestCase):
         self.assertEqual(21, items[0].quality)
         self.assertEqual(22, items[1].quality)
         self.assertEqual(23, items[2].quality)
+
+    def test_quality_drops_to_zero(self):
+        items = [
+            Item("Backstage passes to a TAFKAL80ETC concert", 0, 20),
+            Item("Backstage passes to a TAFKAL80ETC concert", -1, 20),
+        ]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+        self.assertEqual(0, items[1].quality)
 
 
 if __name__ == "__main__":
