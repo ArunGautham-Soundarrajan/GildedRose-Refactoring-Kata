@@ -4,6 +4,7 @@ from item_handler import (
     AgedBrieItemHandler,
     BackstagePassesItemHandler,
     SulfurasItemHandler,
+    ConjuredItemHandler,
 )
 
 
@@ -17,16 +18,14 @@ class GildedRose(object):
 
             if item.name == "Aged Brie":
                 AgedBrieItemHandler(item).handle_update()
-                print("Aged Brie using class")
             elif item.name == "Backstage passes to a TAFKAL80ETC concert":
                 BackstagePassesItemHandler(item).handle_update()
-                print("Backstage using class")
             elif item.name == "Sulfuras, Hand of Ragnaros":
                 SulfurasItemHandler(item).handle_update()
-                print("Sulfuras using class")
+            elif item.name.startswith("Conjured"):
+                ConjuredItemHandler(item).handle_update()
             else:
                 NormalItemHandler(item).handle_update()
-                print("Normal using class")
 
 
 class Item:

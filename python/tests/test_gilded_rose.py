@@ -83,5 +83,14 @@ class GildedRoseBackstagePassesTest(unittest.TestCase):
         self.assertEqual(0, items[1].quality)
 
 
+class GildedRoseConjuredTest(unittest.TestCase):
+    def test_quality_decreases_twice_as_fast(self):
+        items = [Item("Conjured", 2, 10), Item("Conjured Cake", 0, 3)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(8, items[0].quality)
+        self.assertEqual(1, items[1].quality)
+
+
 if __name__ == "__main__":
     unittest.main()

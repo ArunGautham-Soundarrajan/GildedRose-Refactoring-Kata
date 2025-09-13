@@ -54,3 +54,11 @@ class SulfurasItemHandler(ItemHandler):
 
     def update_sell_in(self):
         pass
+
+
+class ConjuredItemHandler(ItemHandler):
+    def cal_degradation_rate(self):
+        return self.degradation_rate * 2
+
+    def update_quality(self):
+        self.item.quality = max(0, self.item.quality - self.cal_degradation_rate())
