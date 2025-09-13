@@ -13,19 +13,24 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-    def update_quality(self):
-        for item in self.items:
+    def get_handler(self, item):
+        """Returns the correct handler for the item"""
+        if item.name == "Aged Brie":
+            return AgedBrieItemHandler(item)
+        elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+            return BackstagePassesItemHandler(item)
+        elif item.name == "Sulfuras, Hand of Ragnaros":
+            return SulfurasItemHandler(item)
+        elif item.name.startswith("Conjured"):
+            return ConjuredItemHandler(item)
+        else:
+            return NormalItemHandler(item)
 
-            if item.name == "Aged Brie":
-                AgedBrieItemHandler(item).handle_update()
-            elif item.name == "Backstage passes to a TAFKAL80ETC concert":
-                BackstagePassesItemHandler(item).handle_update()
-            elif item.name == "Sulfuras, Hand of Ragnaros":
-                SulfurasItemHandler(item).handle_update()
-            elif item.name.startswith("Conjured"):
-                ConjuredItemHandler(item).handle_update()
-            else:
-                NormalItemHandler(item).handle_update()
+    def update_quality(self):
+        """Updates the quality of all items"""
+        for item in self.items:
+            handler = self.get_handler(item)
+            handler.update_quality()
 
 
 class Item:
