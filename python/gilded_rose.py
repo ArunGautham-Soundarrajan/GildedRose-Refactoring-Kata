@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from item_handler import NormalItemHandler
+from item_handler import NormalItemHandler, AgedBrieItemHandler
 
 
 class GildedRose(object):
@@ -11,11 +11,13 @@ class GildedRose(object):
         for item in self.items:
 
             if (
-                item.name != "Aged Brie"
-                and item.name != "Backstage passes to a TAFKAL80ETC concert"
+                item.name != "Backstage passes to a TAFKAL80ETC concert"
                 and item.name != "Sulfuras, Hand of Ragnaros"
             ):
-                NormalItemHandler(item).update_quality()
+                if item.name == "Aged Brie":
+                    AgedBrieItemHandler(item).update_quality()
+                else:
+                    NormalItemHandler(item).update_quality()
 
                 print("handling using class")
             else:

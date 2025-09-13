@@ -22,3 +22,8 @@ class ItemHandler:
 class NormalItemHandler(ItemHandler):
     def update_quality(self):
         self.item.quality = max(0, self.item.quality - self.cal_degradation_rate())
+
+
+class AgedBrieItemHandler(ItemHandler):
+    def update_quality(self):
+        self.item.quality = min(50, self.item.quality + self.cal_degradation_rate())
