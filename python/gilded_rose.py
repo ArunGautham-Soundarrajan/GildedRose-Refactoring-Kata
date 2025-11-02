@@ -1,39 +1,36 @@
 # -*- coding: utf-8 -*-
+from item_handler import (
+    NormalItemHandler,
+    AgedBrieItemHandler,
+    BackstagePassesItemHandler,
+    SulfurasItemHandler,
+    ConjuredItemHandler,
+)
+
 
 class GildedRose(object):
 
     def __init__(self, items):
         self.items = items
 
+    def get_handler(self, item):
+        """Returns the correct handler for the item"""
+        if item.name == "Aged Brie":
+            return AgedBrieItemHandler(item)
+        elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+            return BackstagePassesItemHandler(item)
+        elif item.name == "Sulfuras, Hand of Ragnaros":
+            return SulfurasItemHandler(item)
+        elif item.name.startswith("Conjured"):
+            return ConjuredItemHandler(item)
+        else:
+            return NormalItemHandler(item)
+
     def update_quality(self):
+        """Updates the quality of all items"""
         for item in self.items:
-            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.quality > 0:
-                    if item.name != "Sulfuras, Hand of Ragnaros":
-                        item.quality = item.quality - 1
-            else:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if item.name != "Aged Brie":
-                    if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                        if item.quality > 0:
-                            if item.name != "Sulfuras, Hand of Ragnaros":
-                                item.quality = item.quality - 1
-                    else:
-                        item.quality = item.quality - item.quality
-                else:
-                    if item.quality < 50:
-                        item.quality = item.quality + 1
+            handler = self.get_handler(item)
+            handler.handle_update()
 
 
 class Item:
